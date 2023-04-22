@@ -36,9 +36,19 @@
     transform: rotate(360deg);
   }
 }
+.outer-container {
+  height: 100px; /* Adjust the height value based on your desired height */
+  overflow-y: hidden;
+}
 
+.story-container {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  height: 100%;
+  white-space: nowrap;
+}
 .top-bar {
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;

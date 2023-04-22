@@ -1,21 +1,31 @@
-// App.js
-
 import React, { useState } from 'react';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
 import TopBar from './TopBar';
 import BottomBar from './BottomBar';
-import Home from './Home';
+import Home from './Home/Home';
 import ProductSwipe from './ProductSwipe';
 import './App.css';
+import Story from './Story/Story';
 
 function App() {
-  const [selectedPage, setSelectedPage] = useState('Home');
+  const [selectedPage, _setSelectedPage] = useState('Home');
+  const [storyID, setStoryID] = useState(0);
+
+  function setSelectedPage(newPage, newStoryID) {
+    if (newStoryID !== undefined) {
+      setStoryID(newStoryID);
+    }
+    _setSelectedPage(newPage);
+  }
 
   const renderContent = () => {
     switch (selectedPage) {
       case 'Home':
-        return <Home />;
+        return <Home onSelectedPageChange={setSelectedPage} />;
       case 'ProductSwipe':
         return <ProductSwipe />;
+      case 'Story':
+        return <Story id={storyID} />;
       // Add more cases for other pages if needed
       default:
         return <Home />;
@@ -23,12 +33,21 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <SafeAreaView style={styles.container}>
       <TopBar />
-      <div style={{ flexGrow: 1 }}>{renderContent()}</div>
+      <View style={styles.content}>{renderContent()}</View>
       <BottomBar onSelectedPageChange={setSelectedPage} selectedPage={selectedPage} />
-    </div>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+  },
+});
 
 export default App;
